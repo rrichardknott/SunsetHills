@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunset Hills</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,600&family=Modak&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link href="css/prism.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+    <section class="container-fluid" id="title">
+        <!-- Nav Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNavBar">
+            <div class="collapse navbar-collapse" id="navbarToggleSunsetHills">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tryItOut">Try it Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#code">Code</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contactMe">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <a class="navbar-brand" href="#"target="_blank"><img src="../images/sunsetHillsLogo.png" alt="Logo" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleSunsetHills">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+
+        <div id="topSection">            
+            <div class="row" id="topSectionRow">
+                <div class="col">
+                    <h1 id="titleH1">About the Project</h1>
+                    <hr/>
+                    <h3 class="text-justify"><span>You have an array of buildings facing the sun.  The heights of each building from West to East is given in an integer array which a user will input.  The program will then tell which buildings will be able to see the sunset based on their height.</span></h3>                    
+                    <button class="btn btn-outline-light btn-lg download-button" id="downloadButton"type="button"><i class="fab fa-google-play"></i> Download</button>
+                </div>
+                <div class="col">                   
+                    <img class="title-image" id="titleImage" src="images/buildings.jpg" alt="image of buildings">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- try it out section -->
+
+    <section id="tryItOut">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <h3>Try it out</h3>
+                        <h4>Enter six numbers representing different heights of buildings (40, 60, 120, etc).</h4>
+                    </div>
+                    <div class="form-group">                        
+                        <div class="row">
+                            <div class="col">
+                                <input class="form-control numberInput" placeholder="Height of building 1" id="firstBuilding">
+                                <input class="form-control numberInput" placeholder="Height of building 2" id="secondBuilding">
+                                <input class="form-control numberInput" placeholder="Height of building 3" id="thirdBuilding">
+                                <input class="form-control numberInput" placeholder="Height of building 4" id="fourthBuilding">
+                                <input class="form-control numberInput" placeholder="Height of building 5" id="fifthBuilding">
+                                <input class="form-control numberInput" placeholder="Height of building 6" id="sixthBuilding">
+                                <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+                                <button type="submit" id="clearButton" class="btn btn-success">Clear</button>
+                                <h4 id="errorAlert">Invalid Entry!</h4>
+                                <button type="submit" id="errorAlertButton" class="btn btn-danger text-center">Warning</button>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>               
+                <div class="col text-center">
+                    <span class="label label-info h2" id="sunsetBuildingsLabel">Results will be shown here.</span>
+                </div>                             
+            </div>
+        </div>
+    </section>
+
+    <!-- code section -->
+    <section id="code">
+        <div class="container-fluid">
+            <div class="col">
+                <h2 class="text-center" id="codeH2">Review the Code</h2>
+                <pre>
+                    <code class="language-javascript">
+                        $("#errorAlert").hide();
+                        $("#errorAlertButton").hide();
+
+                        $("#submitButton").click(function () {
+
+                            //check to make sure all fields are entered
+                            if ($("#firstBuilding").val().length == 0 || $("#secondBuilding").val().length == 0 || $("#thirdBuilding").val().length == 0 || $("#fourthBuilding").val().length == 0 || $("#fifthBuilding").val().length == 0 || $("#sixthBuilding").val().length == 0) {
+                                $("#errorAlert").show();
+                                $("#errorAlertButton").show();
+                                $("#submitButton").hide();
+                                $("#clearButton").hide();
+                                }
+                            //check to make sure all fields are numbers
+                            if (isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val())) {
+                                $("#errorAlert").show();
+                                $("#errorAlertButton").show();
+                                $("#submitButton").hide();
+                                $("#clearButton").hide();
+                            }
+                            //check to make sure all fields are not negative numbers
+                            if ($("#firstBuilding").val() <= 0 || $("#secondBuilding").val() <= 0 || $("#thirdBuilding").val() <= 0 || $("#fourthBuilding").val() <= 0 || $("#fifthBuilding").val() <= 0 || $("#sixthBuilding").val() <= 0) {
+                                $("#errorAlert").show();
+                                $("#errorAlertButton").show();
+                                $("#submitButton").hide();
+                                $("#clearButton").hide();
+                                }
+
+                            let firstBuilding = parseInt($("#firstBuilding").val());
+                            let secondBuilding = parseInt($("#secondBuilding").val());
+                            let thirdBuilding = parseInt($("#thirdBuilding").val());
+                            let fourthBuilding = parseInt($("#fourthBuilding").val());
+                            let fifthBuilding = parseInt($("#fifthBuilding").val());
+                            let sixthBuilding = parseInt($("#sixthBuilding").val());
+
+                            let buildings = [firstBuilding, secondBuilding, thirdBuilding, fourthBuilding, fifthBuilding, sixthBuilding];
+
+                            //a new array from our current array will be created to represent those buildings that can see the sunset
+                            let sunsetBuildings = new Array();
+
+                            //create an empty variable representing the tallest building
+                            let tallestBuilding = 0;
+
+                            for (var i = 0; i < 6; i++) {
+                                //begin by assigning the first building in the array to the tallestBuilding
+                                if (buildings[i] > tallestBuilding) {
+                                sunsetBuildings.push(buildings[i]);
+                                tallestBuilding = buildings[i];
+                                }
+                                //output the sunsetBuildings to the user
+                                $("#sunsetBuildingsLabel").html(`There are ${sunsetBuildings.length} buildings that can see the sunset.  <br /> And their heights are: ${sunsetBuildings.toString()}.`);
+                            }
+                        });
+
+                        $("#errorAlertButton").on("click", function () {
+                            $("#errorAlert").hide();
+                            $("#errorAlertButton").hide();
+                            $("#submitButton").show();
+                            $("#clearButton").show();
+                            $("#firstBuilding").focus();
+                        });
+
+                        $("#clearButton").on("click", function () {
+                            $("#firstBuilding").val("");
+                            $("#secondBuilding").val("");
+                            $("#thirdBuilding").val("");
+                            $("#fourthBuilding").val("");
+                            $("#fifthBuilding").val("");
+                            $("#sixthBuilding").val("");
+                            $("#firstBuilding").focus();
+                        });
+
+                        // Interval function to change the image on main page from day to night/night to day
+                        var counter = 0;
+                        setInterval(function () {
+                            let buildings = "/images/buildings.jpg";
+                            let buildingsNight = "/images/buildingsNight.jpg";
+                            let image = $("#titleImage");
+
+                            if (counter == 0) {
+                                $(image).attr("src", "/images/buildingsNight.jpg");
+                                counter = 1;
+                            } else {
+                                $(image).attr("src", "/images/buildings.jpg");
+                                counter = 0;
+                            }
+                        }, 3000); //set to change image every 3 seconds.
+                    </code>
+                 </pre>
+            </div>           
+         </div><!--end container-->           
+    </section>   
+
+    <!--Section: Contact v.2-->
+    <section class="container mb-4">
+        <!--Section heading-->
+        <h2 class="h1-responsive font-weight-bold text-center my-4" id="contaceMe">Contact me</h2>
+        <!--Section description-->
+        <p class="text-center w-responsive mx-auto mb-5">
+            Do you have any questions? Please do not hesitate to contact me directly. I will respond to your email within
+            a matter of hours to help you.
+        </p>
+
+        <div class="row">
+
+            <!--Grid column-->
+            <div class="col-md-9 mb-md-0 mb-5">
+                <form id="contact-form" name="contact-form">
+
+                    <!--Grid row-->
+                    <div class="row">
+
+                        <!--Grid column-->
+                        <div class="col-md-6">
+                            <div class="md-form mb-0">
+                                <input type="text" id="name" name="name" class="form-control">
+                                <label for="name" class="">Your name</label>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+                        <!--Grid column-->
+                        <div class="col-md-6">
+                            <div class="md-form mb-0">
+                                <input type="text" id="email" name="email" class="form-control">
+                                <label for="email" class="">Your email</label>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                    </div>
+                    <!--Grid row-->
+                    <!--Grid row-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="md-form mb-0">
+                                <input type="text" id="subject" name="subject" class="form-control">
+                                <label for="subject" class="">Subject</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Grid row-->
+                    <!--Grid row-->
+                    <div class="row">
+
+                        <!--Grid column-->
+                        <div class="col-md-12">
+
+                            <div class="md-form">
+                                <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
+                                <label for="message">Your message</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--Grid row-->
+
+                </form>
+
+                <div class="text-center text-md-left">
+                    <a class="btn btn-info'" id="contactButton">Send</a>
+                </div>
+                <div class="status"></div>
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-md-3 text-center">
+                <ul class="list-unstyled mb-0">
+                    <li>
+                        <i class="fas fa-map-marker-alt fa-2x"></i>
+                        <p>Los Angeles, CA, USA</p>
+                    </li>
+
+                    <li>
+                        <i class="fas fa-phone mt-4 fa-2x"></i>
+                        <p>+ (555) 555-5555</p>
+                    </li>
+
+                    <li>
+                        <i class="fas fa-envelope mt-4 fa-2x"></i>
+                        <p>Richard@richardknott.io</p>
+                    </li>
+                </ul>
+            </div>
+            <!--Grid column-->
+
+        </div>
+
+    </section>
+    <!--Section: Contact v.2-->
+    <!-- Footer -->
+
+    <footer class="text-center">
+        <i class="fab fa-twitter fa-3x" aria-hidden="true"></i>
+        <i class="fab fa-instagram fa-3x" aria-hidden="true"></i>
+        <i class="fab fa-facebook fa-3x" aria-hidden="true"></i>
+        <p>© Copyright 2020 Sum of All Fears</p>
+    </footer>
+
+    <script src="js/jquery-3.5.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/prism.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
