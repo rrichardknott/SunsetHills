@@ -1,92 +1,139 @@
-﻿
-$("#errorAlert").hide();
-$("#errorAlertButton").hide();
+﻿$(document).ready(function () {
 
-$("#submitButton").click(function () {   
+    //Chart
+    var myChart = $("#myChart")[0].getContext("2d");    
+    var theSunsetBuildings = new Chart(myChart, {
+        type: "bar",
+        data: {
+            labels: [" ", "Height 1", "Height 2", "Height 3", "Height 4", "Height 5", "Height 6"],
+            datasets: [{
+                label: "Buildings",
+                data: [0, 2, 2, 2, 2, 2, 2],
+                backgroundColor: ["white", "red", "yellow", "blue", "rebeccapurple", "orange", "black"]
+            }]
 
-    //check to make sure all fields are entered
-    if ($("#firstBuilding").val().length == 0 || $("#secondBuilding").val().length == 0 || $("#thirdBuilding").val().length == 0 || $("#fourthBuilding").val().length == 0 || $("#fifthBuilding").val().length == 0 || $("#sixthBuilding").val().length == 0) {
-        $("#errorAlert").show();
-        $("#errorAlertButton").show();
-        $("#submitButton").hide();
-        $("#clearButton").hide();
-    } 
-    //check to make sure all fields are numbers
-    if (isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val())) {
-        $("#errorAlert").show();
-        $("#errorAlertButton").show();
-        $("#submitButton").hide();
-        $("#clearButton").hide();
-    } 
-    //check to make sure all fields are not negative numbers
-    if ($("#firstBuilding").val() <= 0 || $("#secondBuilding").val() <= 0 || $("#thirdBuilding").val() <= 0 || $("#fourthBuilding").val() <= 0 || $("#fifthBuilding").val() <= 0 || $("#sixthBuilding").val() <= 0) {
-        $("#errorAlert").show();
-        $("#errorAlertButton").show();
-        $("#submitButton").hide();
-        $("#clearButton").hide();
-    } 
+        },
+        options: {}
+    });
+     //End Chart   
+    
+    $(".numberInput").keyup(function () {
+     //Chart        
+        myChart = $("#myChart")[0].getContext("2d");        
+        theSunsetBuildings = new Chart(myChart, {
+            type: "bar",
+            data: {
+                labels: [" ", "Height 1", "Height 2", "Height 3", "Height 4", "Height 5", "Height 6"],
+                datasets: [{
+                    label: "Buildings",                    
+                    data: [0, parseInt($("#firstBuilding").val()), parseInt($("#secondBuilding").val()), parseInt($("#thirdBuilding").val()), parseInt($("#fourthBuilding").val()), parseInt($("#fifthBuilding").val()), parseInt($("#sixthBuilding").val())],
+                    backgroundColor: ["white", "red", "yellow", "blue", "purple", "orange", "black"]
+                }]
 
-    let firstBuilding = parseInt($("#firstBuilding").val());    
-    let secondBuilding = parseInt($("#secondBuilding").val());    
-    let thirdBuilding = parseInt($("#thirdBuilding").val());    
-    let fourthBuilding = parseInt($("#fourthBuilding").val());    
-    let fifthBuilding = parseInt($("#fifthBuilding").val());   
-    let sixthBuilding = parseInt($("#sixthBuilding").val());    
+            },
+            options: {
+                responsive: true
+            }
+        });
+     //End Chart
+    });
+    
 
-    let buildings = [firstBuilding, secondBuilding, thirdBuilding, fourthBuilding, fifthBuilding, sixthBuilding];
+    $("#submitButton").click(function () {         
 
-    //a new array from our current array will be created to represent those buildings that can see the sunset
-    let sunsetBuildings = new Array();    
-
-    //create an empty variable representing the tallest building
-    let tallestBuilding = 0;
-
-    for (var i = 0; i < 6; i++) {
-        //begin by assigning the first building in the array to the tallestBuilding
-        if (buildings[i] > tallestBuilding) {            
-            sunsetBuildings.push(buildings[i]);
-            tallestBuilding = buildings[i];
+        //check to make sure all fields are entered
+        if ($("#firstBuilding").val().length == 0 || $("#secondBuilding").val().length == 0 || $("#thirdBuilding").val().length == 0 || $("#fourthBuilding").val().length == 0 || $("#fifthBuilding").val().length == 0 || $("#sixthBuilding").val().length == 0) {
+            swal("Error Alert", "Did you forget to enter a height?", "error");
+            return;
         }
-        //output the sunsetBuildings to the user
-        $("#sunsetBuildingsLabel").html(`There are ${sunsetBuildings.length} buildings that can see the sunset.  <br/> And their heights are: ${sunsetBuildings.toString()}.`);
-    }
+
+        //check to make sure all fields are numbers
+        else if (isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val()) || isNaN($("#firstBuilding").val())) {
+            swal("Error Alert", "All entries must be valid numbers.", "error");
+            return;
+        }
+
+        //check to make sure all fields are not negative numbers
+        else if ($("#firstBuilding").val() <= 0 || $("#secondBuilding").val() <= 0 || $("#thirdBuilding").val() <= 0 || $("#fourthBuilding").val() <= 0 || $("#fifthBuilding").val() <= 0 || $("#sixthBuilding").val() <= 0) {
+            swal("Error Alert", "No negative numbers.", "error");
+            return;
+        }
+        else {            
+
+            var firstBuilding = parseInt($("#firstBuilding").val());
+            var secondBuilding = parseInt($("#secondBuilding").val());
+            var thirdBuilding = parseInt($("#thirdBuilding").val());
+            var fourthBuilding = parseInt($("#fourthBuilding").val());
+            var fifthBuilding = parseInt($("#fifthBuilding").val());
+            var sixthBuilding = parseInt($("#sixthBuilding").val());            
+
+            let buildings = [firstBuilding, secondBuilding, thirdBuilding, fourthBuilding, fifthBuilding, sixthBuilding];
+
+            //a new array from our current array will be created to represent those buildings that can see the sunset
+            let sunsetBuildings = new Array();    
+
+            //create an empty variable representing the tallest building
+            let tallestBuilding = 0;
+            let counter = 0;
+
+            for (var i = 0; i < 6; i++) {
+                //begin by assigning the first building in the array to the tallestBuilding
+                if (buildings[i] > tallestBuilding) {
+                    sunsetBuildings.push(buildings[i]);
+                    tallestBuilding = buildings[i];
+                    counter += 1;
+                }
+                else {
+                    continue;
+                }
+            }           
+           
+            //output the sunsetBuildings to the user                
+            if (sunsetBuildings.length > 1) {               
+                return swal({
+                                title: "Buildings Found!",
+                                text: `There were ${sunsetBuildings.length} buildings that can see the sunset.  And their heights are: ${sunsetBuildings.toString()}.`,
+                                icon: "success",
+                            });                            
+            }
+            else {               
+                return swal({
+                                title: "Building Found!",
+                                text: `There was ${sunsetBuildings.length} building that can see the sunset.  And its height is: ${sunsetBuildings.toString()}.`,
+                                icon: "success",                                
+                            });                
+            }            
+        }        
+    });
+    
+    $("#clearButton").on("click", function () {
+        $("#firstBuilding").val("");
+        $("#secondBuilding").val("");
+        $("#thirdBuilding").val("");
+        $("#fourthBuilding").val("");
+        $("#fifthBuilding").val("");
+        $("#sixthBuilding").val("");
+        $("#firstBuilding").focus();
+
+        //Chart
+        myChart = $("#myChart")[0].getContext("2d");
+        theSunsetBuildings = new Chart(myChart, {
+            type: "bar",
+            data: {
+                labels: [" ", "Height 1", "Height 2", "Height 3", "Height 4", "Height 5", "Height 6"],
+                datasets: [{
+                    label: "Buildings",
+                    data: [0, 1, 1, 1, 1, 1, 1],
+                    backgroundColor: ["white", "red", "yellow", "blue", "rebeccapurple", "darkorange", "gray"]
+                }]
+
+            },
+            options: {}
+        });
+     //End Chart
+    });   
+   
+    
 });
-
-$("#errorAlertButton").on("click", function () {
-    $("#errorAlert").hide();
-    $("#errorAlertButton").hide();
-    $("#submitButton").show();
-    $("#clearButton").show();
-    $("#firstBuilding").focus();
-});
-
-$("#clearButton").on("click", function () {
-    $("#firstBuilding").val("");
-    $("#secondBuilding").val("");
-    $("#thirdBuilding").val("");
-    $("#fourthBuilding").val("");
-    $("#fifthBuilding").val("");
-    $("#sixthBuilding").val("");
-    $("#firstBuilding").focus();
-});
-
-// Interval function to change the image on main page from day to night/night to day
-var counter = 0;
-setInterval(function () {
-
-    let buildings = "/images/buildings.jpg";
-    let buildingsNight = "/images/buildingsNight.jpg";
-    let image = $("#titleImage");
-
-    if (counter == 0) {
-        $(image).attr("src", "/images/buildingsNight.jpg");
-        counter = 1;
-    } else {
-        $(image).attr("src", "/images/buildings.jpg");
-        counter = 0;
-    }
-}, 3000); //set to change image every 3 seconds.
-
-
 
 
