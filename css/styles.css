@@ -2,6 +2,11 @@ body{
     font-family: 'Garamond', sans-serif;
     
 }
+
+html {
+    scroll-behavior: smooth;
+}
+
 #title {
     background-color: #3891A6;
     color: #ffffff;
